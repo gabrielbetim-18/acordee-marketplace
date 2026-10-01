@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acordee | Marketplace de Instrumentos e Equipamentos Musicais</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* Opção 2: Repetição com vinheta suave que disfarça as emendas */
+        body {
+            background-color: #120b08;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(18, 11, 8, 0.35) 0%, rgba(10, 6, 4, 0.88) 100%),
+                url('img/textura-madeira.jpg');
+            background-repeat: repeat-y;
+            background-size: 100% auto;
+            background-position: center top;
+            background-attachment: fixed;
+            color: #ece8e1;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Header em Ébano / Madeira Queimada */
+        header {
+            background-color: rgba(14, 9, 6, 0.94);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid #332014;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.85);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 8px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo-wrapper {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 4px 18px 4px 6px;
+            overflow: visible;
+            transition: transform 0.2s ease;
+        }
+
+        .logo-wrapper:hover {
+            transform: scale(1.02);
+        }
+
+        .logo-script-gold {
+            font-family: 'Great Vibes', cursive !important;
+            font-size: 52px;
+            font-weight: normal;
+            display: inline-block;
+            line-height: 1.35;
+            padding: 2px 16px 8px 6px;
+            overflow: visible;
+            white-space: nowrap;
+            background: linear-gradient(
+                180deg,
+                #fffdf0 0%,
+                #fef08a 25%,
+                #eab308 55%,
+                #ca8a04 80%,
+                #854d0e 100%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 8px rgba(234, 179, 8, 0.45));
+            user-select: none;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            background-color: #070403;
+            border: 1px solid #3d281a;
+            border-radius: 8px;
+            padding: 10px 16px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-bar input:focus {
+            border-color: #eab308;
+            box-shadow: 0 0 8px rgba(234, 179, 8, 0.25);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .auth-links {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .auth-links a {
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .btn-login {
+            color: #c4b5a8;
+        }
+
+        .btn-login:hover {
+            color: #ffffff;
+        }
+
+        .auth-divider {
+            color: #523522;
+            font-size: 12px;
+        }
+
+        .btn-register {
+            color: #fef08a;
+        }
+
+        .btn-register:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .btn-announce {
+            background-color: transparent;
+            border: 1px solid #eab308;
+            color: #fef08a;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .btn-announce:hover {
+            background-color: #eab308;
+            color: #0e0906;
+            box-shadow: 0 0 12px rgba(234, 179, 8, 0.35);
+        }
+
+        /* Sub Navigation */
+        .subnav {
+            background-color: rgba(20, 13, 9, 0.94);
+            border-bottom: 1px solid #2e1d13;
+            padding: 10px 24px;
+        }
+
+        .subnav-links {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 24px;
+            list-style: none;
+            overflow-x: auto;
+        }
+
+        .subnav-links a {
+            color: #baaa9c;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: color 0.2s;
+        }
+
+        .subnav-links a:hover, .subnav-links a.active {
+            color: #fef08a;
+        }
+
+        /* Hero com transição fluida */
+        .hero {
+            background: linear-gradient(
+                180deg, 
+                rgba(14, 9, 6, 0.96) 0%, 
+                rgba(18, 11, 8, 0.82) 45%, 
+                rgba(23, 14, 10, 0.35) 80%,
+                transparent 100%
+            );
+            padding: 64px 24px 80px 24px;
+            text-align: center;
+            border-bottom: none;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(234, 179, 8, 0.1);
+            color: #fef08a;
+            border: 1px solid rgba(234, 179, 8, 0.35);
+            border-radius: 999px;
+            padding: 7px 22px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+            box-shadow: 0 0 14px rgba(234, 179, 8, 0.12);
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            font-weight: 800;
+            line-height: 1.25;
+            margin-bottom: 16px;
+            color: #ffffff;
+            text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8);
+        }
+
+        .hero p {
+            font-size: 17px;
+            color: #d6cac2;
+            margin-bottom: 32px;
+        }
+
+        .hero-ctas {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 48px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(180deg, #facc15 0%, #ca8a04 100%);
+            color: #0e0906;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 15px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(202, 138, 4, 0.35);
+            transition: 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(250, 204, 21, 0.5);
+        }
+
+        .btn-secondary {
+            background-color: #2b1a12;
+            color: #f5eee7;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            border: 1px solid #5a3822;
+            transition: 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background-color: #362218;
+            border-color: #7a4d2f;
+        }
+
+        /* Badges de Confiança */
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .trust-card {
+            background: linear-gradient(180deg, rgba(46, 30, 20, 0.95) 0%, rgba(31, 19, 12, 0.95) 100%);
+            border: 1px solid #523522;
+            border-radius: 8px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+        }
+
+        .trust-icon {
+            font-size: 24px;
+            background-color: #3d2618;
+            padding: 10px;
+            border-radius: 8px;
+            line-height: 1;
+            border: 1px solid #664128;
+        }
+
+        .trust-text h4 {
+            font-size: 14px;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .trust-text p {
+            font-size: 12px;
+            color: #d1c0b4;
+            margin: 0;
+        }
+
+        /* Seção Geral */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px 60px 24px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 32px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .section-title h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .section-title p {
+            color: #bfaea2;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .see-all {
+            color: #fde047;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .see-all:hover {
+            text-decoration: underline;
+        }
+
+        /* Grid e Cards de Produto */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .product-card {
+            background-color: #1a110b;
+            background-image: linear-gradient(180deg, #241710 0%, #150d08 100%);
+            border: 1px solid #4a2d1a;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            border-color: #eab308;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.85);
+        }
+
+        /* Área da Foto */
+        .product-img-box {
+            height: 260px;
+            background-color: #120b08;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #332014;
+            padding: 0;
+        }
+
+        .product-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-img-box img {
+            transform: scale(1.05);
+        }
+
+        /* Imagens de catálogo */
+        .product-img-box.bg-catalog {
+            background-color: #ffffff;
+        }
+
+        .product-img-box.bg-catalog img {
+            object-fit: contain;
+            padding: 16px;
+        }
+
+        .tag-status {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background-color: rgba(16, 185, 129, 0.95);
+            color: #fff;
+            padding: 4px 9px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            z-index: 3;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+        }
+
+        .tag-status.new {
+            background-color: rgba(217, 119, 6, 0.95);
+        }
+
+        .tag-verified {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(20, 12, 8, 0.92);
+            color: #fef08a;
+            border: 1px solid #eab308;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+            z-index: 3;
+        }
+
+        .tag-factory {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(20, 12, 8, 0.92);
+            color: #fed7aa;
+            border: 1px solid #f97316;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+            z-index: 3;
+        }
+
+        .product-body {
+            padding: 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .product-specs {
+            font-size: 12px;
+            color: #e2d3c7;
+            margin-bottom: 14px;
+            line-height: 1.4;
+        }
+
+        .price-box {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-top: 12px;
+            border-top: 1px solid #3d2516;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .price-group {
+            display: flex;
+            flex-direction: column;
+            white-space: nowrap;
+        }
+
+        .price-old {
+            font-size: 11px;
+            color: #a89384;
+            text-decoration: line-through;
+            line-height: 1.2;
+            margin-bottom: 3px;
+        }
+
+        .price-val {
+            font-size: 19px;
+            font-weight: 800;
+            color: #34d399;
+            line-height: 1.1;
+            white-space: nowrap;
+        }
+
+        .condition-tag {
+            font-size: 11px;
+            color: #f3eae3;
+            background-color: #120b08;
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #3d2516;
+            white-space: nowrap;
+        }
+
+        /* Balizador de Preço */
+        .benchmark-box {
+            background: linear-gradient(180deg, rgba(38, 24, 16, 0.95) 0%, rgba(26, 17, 11, 0.95) 100%);
+            border: 1px solid #5a3822;
+            border-left: 4px solid #ca8a04;
+            border-radius: 12px;
+            padding: 32px;
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.65);
+        }
+
+        .benchmark-info {
+            max-width: 500px;
+        }
+
+        .benchmark-info h3 {
+            font-size: 20px;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .benchmark-info p {
+            font-size: 14px;
+            color: #c9b9ae;
+        }
+
+        .benchmark-simulator {
+            background-color: #110b07;
+            border: 1px solid #3d2617;
+            border-radius: 8px;
+            padding: 20px;
+            min-width: 320px;
+            flex: 1;
+        }
+
+        .benchmark-simulator label {
+            display: block;
+            font-size: 12px;
+            color: #baa697;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .sim-input {
+            width: 100%;
+            background-color: #1f130b;
+            border: 1px solid #4f311e;
+            padding: 8px 12px;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 14px;
+        }
+
+        .sim-results {
+            background-color: #170e09;
+            border-left: 3px solid #34d399;
+            padding: 10px 14px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .sim-results .stat-label {
+            font-size: 11px;
+            color: #b5a294;
+        }
+
+        .sim-results .stat-value {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #080504;
+            border-top: 1px solid #291a11;
+            padding: 50px 24px 24px 24px;
+            font-size: 13px;
+            color: #8c786a;
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand h4 {
+            font-family: 'Great Vibes', cursive !important;
+            color: #fde047;
+            font-size: 38px;
+            font-weight: normal;
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+
+        .footer-col h5 {
+            color: #f1f5f9;
+            font-size: 14px;
+            margin-bottom: 14px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 8px;
+        }
+
+        .footer-col a {
+            color: #bfaea2;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-col a:hover {
+            color: #fef08a;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            border-top: 1px solid #1a100a;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #6d5b4f;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo-wrapper" title="Acordee">
+                <span class="logo-script-gold">Acordee</span>
+            </a>
+
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar por instrumento novo ou usado, modelo, luthier...">
+            </div>
+            <div class="header-actions">
+                <a href="#" class="btn-announce">+ Anunciar Instrumento</a>
+                <div class="auth-links">
+                    <a href="#" class="btn-login">Entrar</a>
+                    <span class="auth-divider">|</span>
+                    <a href="#" class="btn-register">Cadastre-se</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sub Navigation -->
+    <nav class="subnav">
+        <ul class="subnav-links">
+            <li><a href="#" class="active">Todos os Instrumentos</a></li>
+            <li><a href="#">Guitarras & Baixos</a></li>
+            <li><a href="#">Pedais & Efeitos</a></li>
+            <li><a href="#">Amplificadores Valvulados</a></li>
+            <li><a href="#">Baterias & Percussão</a></li>
+            <li><a href="#">Teclas & Sintetizadores</a></li>
+            <li><a href="#">Luthieria & Peças</a></li>
+            <li><a href="#">Raridades & Vintage</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge-pill">
+                O Marketplace Musical Especializado & Sem enrolação
+            </div>
+            <h1>Sua música no tom e tempo certo, com a segurança que você merece.</h1>
+            <p>A plataforma definitiva para compra e venda de instrumentos novos ou usados com intermediação de pagamento, aval de luthier e frete expresso de 24h a 48h.</p>
+            <div class="hero-ctas">
+                <a href="#" class="btn-primary">Ver Instrumentos Disponíveis</a>
+                <a href="#" class="btn-secondary">Anunciar Meu Instrumento</a>
+            </div>
+        </div>
+
+        <!-- Diferenciais -->
+        <div class="trust-grid">
+            <div class="trust-card">
+                <div class="trust-icon">🛡️</div>
+                <div class="trust-text">
+                    <h4>Pagamento Seguro (Escrow)</h4>
+                    <p>Dinheiro protegido até o comprador receber e testar o item.</p>
+                </div>
+            </div>
+            <div class="trust-card">
+                <div class="trust-icon">🔧</div>
+                <div class="trust-text">
+                    <h4>Selo de Aval de Luthier</h4>
+                    <p>Checagem técnica de integridade, tensor e circuito elétrico.</p>
+                </div>
+            </div>
+            <div class="trust-card">
+                <div class="trust-icon">⚡</div>
+                <div class="trust-text">
+                    <h4>Logística Expressa</h4>
+                    <p>Envio em 24h a 48h com seguro para instrumentos frágeis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vitrine de Produtos -->
+    <section class="container">
+        <div class="section-header">
+            <div class="section-title">
+                <h2>Instrumentos e acessórios em destaque</h2>
+                <p>Equipamentos revisados, com procedência garantida e especificações técnicas conferidas por quem entende.</p>
+            </div>
+            <a href="#" class="see-all">Ver catálogo completo →</a>
+        </div>
+
+        <div class="product-grid">
+            <!-- 1. Guitarra Strinberg Usada -->
+            <div class="product-card">
+                <div class="product-img-box">
+                    <span class="tag-status">Usado - Revisado</span>
+                    <span class="tag-verified">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fef08a" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                        </svg>
+                        Aval Luthier
+                    </span>
+                    <img src="img/guitarra-strinberg.png" alt="Guitarra Stratocaster Strinberg Sunburst" onerror="this.onerror=null; this.src='img/guitarra-strinberg';">
+                </div>
+                <div class="product-body">
+                    <h3 class="product-name">Guitarra Stratocaster Strinberg Sunburst</h3>
+                    <p class="product-specs">Configuração SSS • Trastes retificados • Circuito revisado</p>
+                    <div class="price-box">
+                        <div class="price-group">
+                            <div class="price-val">R$ 499,90</div>
+                        </div>
+                        <span class="condition-tag">Usado Verificado</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Takamine Jumbo EG523SC Usado -->
+            <div class="product-card">
+                <div class="product-img-box">
+                    <span class="tag-status">Usado - Excelente</span>
+                    <span class="tag-verified">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fef08a" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                        </svg>
+                        Aval Luthier
+                    </span>
+                    <img src="img/takamine-jumbo.png" alt="Violão Takamine EG523SC Jumbo Usado" onerror="this.onerror=null; this.src='img/takamine-jumbo';">
+                </div>
+                <div class="product-body">
+                    <h3 class="product-name">Violão Takamine EG523SC Jumbo (Coreano)</h3>
+                    <p class="product-specs">Aço • Tampo Sólido • Flamed Maple • Pré TK-40</p>
+                    <div class="price-box">
+                        <div class="price-group">
+                            <div class="price-val">R$ 3.700,00</div>
+                        </div>
+                        <span class="condition-tag">Usado Verificado</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Baixo SX SBM1 Jazz Bass NOVO -->
+            <div class="product-card">
+                <div class="product-img-box bg-catalog">
+                    <span class="tag-status new">Novo de Loja</span>
+                    <span class="tag-factory">✓ Garantia SX</span>
+                    <img src="img/baixo-sx-pink.png" alt="Contrabaixo Passivo SX SBM1 Jazz Bass Pink" onerror="this.onerror=null; this.src='img/baixo-sx-pink';">
+                </div>
+                <div class="product-body">
+                    <h3 class="product-name">Contrabaixo Passivo SX SBM1 Jazz Bass (4C)</h3>
+                    <p class="product-specs">Cor Pink Twilight • Escala em Maple • Captação Vintage JB</p>
+                    <div class="price-box">
+                        <div class="price-group">
+                            <div class="price-val">R$ 1.950,00</div>
+                        </div>
+                        <span class="condition-tag">Novo Lacrado</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Amplificador Borne Vorax 840 NOVO -->
+            <div class="product-card">
+                <div class="product-img-box bg-catalog">
+                    <span class="tag-status new">Novo - Lacrado</span>
+                    <span class="tag-factory">✓ Garantia 1 Ano</span>
+                    <img src="img/ampli-borne-vorax.png" alt="Amplificador Borne Vorax 840 Studio" onerror="this.onerror=null; this.src='img/ampli-borne-vorax';">
+                </div>
+                <div class="product-body">
+                    <h3 class="product-name">Amplificador Borne Vorax 840 Studio C/ Interface</h3>
+                    <p class="product-specs">40W RMS • Conexão App/Efeitos • Painel Preto e Dourado</p>
+                    <div class="price-box">
+                        <div class="price-group">
+                            <span class="price-old">De R$ 1.200,00</span>
+                            <div class="price-val">R$ 750,00</div>
+                        </div>
+                        <span class="condition-tag">Novo • Envio 24h</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Balizador de Preço -->
+    <section class="container" style="padding-top: 0;">
+        <div class="benchmark-box">
+            <div class="benchmark-info">
+                <h3>Preço justo baseado no histórico real do mercado.</h3>
+                <p>Acabe com os valores arbitrários de classificados informais. Consulte nosso índice de valores reais praticados antes de comprar ou anunciar instrumentos novos ou usados.</p>
+            </div>
+            <div class="benchmark-simulator">
+                <label>Simulador de Preço Médio Praticado</label>
+                <input type="text" class="sim-input" value="Takamine EG523SC Jumbo Usado">
+                <div class="sim-results">
+                    <div class="stat-label">Faixa Média em Seminovos:</div>
+                    <div class="stat-value">R$ 3.500 – R$ 4.100 <span style="font-size: 11px; color:#34d399; font-weight:normal;">(Substituto Novo: ~R$ 5.100)</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h4>Acordee</h4>
+                <p>Plataforma vertical especializada na compra, venda e avaliação técnica de instrumentos musicais novos e usados.[cite: 1]</p>
+                <p style="margin-top: 10px; font-size: 11px;">Santa Maria - RS | Brasil[cite: 1]</p>
+            </div>
+            <div class="footer-col">
+                <h5>Navegação</h5>
+                <ul>
+                    <li><a href="#">Instrumentos Novos</a></li>
+                    <li><a href="#">Equipamentos Usados</a></li>
+                    <li><a href="#">Anunciar Instrumento</a></li>
+                    <li><a href="#">Guia de Preços de Mercado</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Luthieria & Lojas</h5>
+                <ul>
+                    <li><a href="#">Rede de Oficinas Credenciadas</a></li>
+                    <li><a href="#">Seja um Luthier Parceiro</a></li>
+                    <li><a href="#">Bancas Virtuais para Lojas</a></li>
+                    <li><a href="#">Guias de Embalagem Frágil</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Segurança & Regras</h5>
+                <ul>
+                    <li><a href="#">Sistema de Custódia (Escrow)</a></li>
+                    <li><a href="#">Checklist Técnico Obrigatório</a></li>
+                    <li><a href="#">Política de Devolução</a></li>
+                    <li><a href="#">Central de Ajuda</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Acordee Intermediação Digital Ltda. Todos os direitos reservados. CNPJ: 63.19-4/00.[cite: 1]</p>
+        </div>
+    </footer>
+
+</body>
+</html>
