@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acordee | Marketplace Especializado de Instrumentos Musicais</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* Fundo Madeira Escura Tonalizada */
+        body {
+            background-color: #0b0f10;
+            background-image: 
+                radial-gradient(circle at 50% 40%, rgba(13, 20, 22, 0.75) 0%, rgba(6, 9, 10, 0.95) 100%),
+                url('img/textura-madeira.jpg');
+            background-repeat: repeat-y;
+            background-size: 100% auto;
+            background-position: center top;
+            background-attachment: fixed;
+            color: #ece8e1;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background-color: rgba(9, 14, 15, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid #162426;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.85);
+        }
+
+        .header-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .logo-wrapper {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 6px 16px 6px 6px;
+            overflow: visible;
+            transition: transform 0.2s ease;
+        }
+
+        .logo-wrapper:hover {
+            transform: scale(1.02);
+        }
+
+        .logo-script-teal {
+            font-family: 'Great Vibes', cursive !important;
+            font-size: 54px;
+            font-weight: normal;
+            display: inline-block;
+            line-height: 1.4;
+            padding: 4px 18px 10px 10px;
+            margin: -6px 0 -4px -6px;
+            overflow: visible;
+            white-space: nowrap;
+            background: linear-gradient(
+                180deg,
+                #ffffff 0%,
+                #a7f3ec 25%,
+                #2ec4b6 60%,
+                #1f9388 85%,
+                #135952 100%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 10px rgba(46, 196, 182, 0.55));
+            user-select: none;
+        }
+
+        /* Barra de pesquisa */
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            width: 18px;
+            height: 18px;
+            color: #557074;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-bar input {
+            width: 100%;
+            background-color: #050809;
+            border: 1px solid #1a2a2d;
+            border-radius: 8px;
+            padding: 10px 16px 10px 42px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-bar input:focus {
+            border-color: #2ec4b6;
+            box-shadow: 0 0 8px rgba(46, 196, 182, 0.35);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .btn-announce {
+            background-color: transparent;
+            border: 1px solid #2ec4b6;
+            color: #a7f3ec;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-announce:hover {
+            background-color: #2ec4b6;
+            color: #070b0c;
+            box-shadow: 0 0 12px rgba(46, 196, 182, 0.45);
+        }
+
+        .auth-links {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .auth-links a {
+            text-decoration: none;
+            color: #9cb4b8;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .auth-links a:hover {
+            color: #ffffff;
+        }
+
+        .auth-divider {
+            color: #2a3e42;
+            font-size: 13px;
+        }
+
+        .btn-signup {
+            color: #a7f3ec !important;
+            font-weight: 600 !important;
+        }
+
+        .btn-signup:hover {
+            text-decoration: underline;
+        }
+
+        /* Subnav */
+        .subnav {
+            background-color: rgba(11, 16, 18, 0.94);
+            border-bottom: 1px solid #162426;
+            padding: 10px 24px;
+        }
+
+        .subnav-links {
+            max-width: 1240px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            list-style: none;
+            overflow: hidden;
+        }
+
+        .subnav-links li {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            justify-content: center;
+            position: relative;
+        }
+
+        .subnav-links li:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            height: 14px;
+            width: 1px;
+            background-color: rgba(46, 196, 182, 0.18);
+        }
+
+        .subnav-links a {
+            color: #8fa5a8;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            padding: 4px 8px;
+            transition: color 0.2s;
+        }
+
+        .subnav-links a.active, .subnav-links a:hover {
+            color: #2ec4b6;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(180deg, rgba(8, 12, 13, 0.95) 0%, rgba(11, 17, 19, 0.75) 50%, rgba(13, 20, 22, 0.3) 100%);
+            padding: 56px 24px 44px 24px;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .badge-pill {
+            display: inline-flex;
+            background-color: rgba(46, 196, 182, 0.12);
+            color: #a7f3ec;
+            border: 1px solid rgba(46, 196, 182, 0.45);
+            border-radius: 999px;
+            padding: 7px 22px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 22px;
+            box-shadow: 0 0 14px rgba(46, 196, 182, 0.18);
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            font-weight: 800;
+            line-height: 1.25;
+            margin-bottom: 16px;
+            color: #ffffff;
+            text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8);
+        }
+
+        .hero p {
+            font-size: 17px;
+            color: #c0d1d3;
+            margin-bottom: 30px;
+        }
+
+        .hero-ctas {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 42px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(180deg, #2ec4b6 0%, #1f9388 100%);
+            color: #ffffff;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 15px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(46, 196, 182, 0.35);
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(46, 196, 182, 0.55);
+        }
+
+        .btn-secondary {
+            background-color: #121c1e;
+            color: #e5ecec;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            border: 1px solid #1f3438;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background-color: #1a282b;
+            border-color: #2ec4b6;
+        }
+
+        /* Quadros de Confiança */
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1080px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .trust-card {
+            background: linear-gradient(180deg, rgba(17, 26, 28, 0.95) 0%, rgba(11, 18, 20, 0.95) 100%);
+            border: 1px solid #1f3438;
+            border-radius: 10px;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            min-height: 96px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        .trust-icon {
+            font-size: 24px;
+            background-color: #132225;
+            padding: 12px;
+            border-radius: 8px;
+            line-height: 1;
+            border: 1px solid #1d393e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .trust-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .trust-text h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+            line-height: 1.25;
+        }
+
+        .trust-text p {
+            font-size: 12.5px;
+            color: #a7bcc0;
+            line-height: 1.45;
+            margin: 0;
+        }
+
+        /* Divisória com Transição */
+        .section-divider-transition {
+            max-width: 1240px;
+            margin: 10px auto 0 auto;
+            padding: 0 24px;
+            position: relative;
+        }
+
+        .divider-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(46, 196, 182, 0.35) 50%, transparent 100%);
+            width: 100%;
+        }
+
+        /* Vitrine de Produtos */
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 34px 24px 50px 24px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 28px;
+            gap: 20px;
+        }
+
+        .section-title h2 {
+            font-size: 24px;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .section-title p {
+            color: #9ab4b8;
+            font-size: 14px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .product-card {
+            background: linear-gradient(180deg, #141f22 0%, #0d1517 100%);
+            border: 1px solid #1f3539;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            border-color: #2ec4b6;
+            box-shadow: 0 12px 30px rgba(46, 196, 182, 0.25);
+        }
+
+        .product-img-box {
+            height: 260px;
+            background-color: #080d0e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #18282b;
+        }
+
+        .product-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-img-box img {
+            transform: scale(1.05);
+        }
+
+        /* Refinamento do fundo de produtos de catálogo (sem estourar fundo branco) */
+        .product-img-box.bg-catalog {
+            background: radial-gradient(circle at 50% 50%, #152225 0%, #080d0e 85%);
+        }
+
+        .product-img-box.bg-catalog img {
+            object-fit: contain;
+            padding: 18px;
+            filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.6));
+        }
+
+        .tag-status {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background-color: rgba(16, 185, 129, 0.95);
+            color: #fff;
+            padding: 4px 9px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            z-index: 2;
+        }
+
+        .tag-status.new {
+            background-color: #2ec4b6;
+            color: #070b0c;
+            box-shadow: 0 2px 8px rgba(46, 196, 182, 0.4);
+        }
+
+        .product-body {
+            padding: 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .rating-box {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+            font-size: 12px;
+            flex-wrap: wrap;
+        }
+
+        .stars-gold {
+            color: #facc15;
+            letter-spacing: 1px;
+            font-size: 13px;
+        }
+
+        .rating-score {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .rating-label-luthier {
+            color: #fde047;
+            font-size: 11px;
+            font-weight: 600;
+            background: rgba(234, 179, 8, 0.12);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            padding: 1px 6px;
+            border-radius: 4px;
+        }
+
+        .rating-label-buyers {
+            color: #a7f3ec;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .product-specs {
+            font-size: 12px;
+            color: #c2d5d8;
+            margin-bottom: 14px;
+        }
+
+        .price-box {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-top: 12px;
+            border-top: 1px solid #192a2d;
+        }
+
+        .price-old {
+            font-size: 11px;
+            color: #708a8e;
+            text-decoration: line-through;
+            margin-bottom: 2px;
+        }
+
+        .price-val {
+            font-size: 19px;
+            font-weight: 800;
+            color: #34d399;
+        }
+
+        .condition-tag {
+            font-size: 11px;
+            color: #e5ecec;
+            background-color: #0b1214;
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #1a2f32;
+        }
+
+        /* Balizador de Preço */
+        .benchmark-box {
+            background: linear-gradient(180deg, rgba(16, 25, 27, 0.95) 0%, rgba(10, 16, 18, 0.95) 100%);
+            border: 1px solid #1f363b;
+            border-left: 4px solid #2ec4b6;
+            border-radius: 12px;
+            padding: 32px;
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .benchmark-info {
+            max-width: 500px;
+        }
+
+        .benchmark-info h3 {
+            font-size: 20px;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .benchmark-info p {
+            font-size: 14px;
+            color: #9cb4b8;
+        }
+
+        .benchmark-simulator {
+            background-color: #080d0e;
+            border: 1px solid #19292c;
+            border-radius: 8px;
+            padding: 20px;
+            min-width: 320px;
+            flex: 1;
+        }
+
+        .benchmark-simulator label {
+            display: block;
+            font-size: 12px;
+            color: #8da4a8;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .sim-input {
+            width: 100%;
+            background-color: #0f181a;
+            border: 1px solid #22373b;
+            padding: 8px 12px;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .sim-input:focus {
+            border-color: #2ec4b6;
+        }
+
+        .sim-results {
+            background-color: #0c1416;
+            border-left: 3px solid #34d399;
+            padding: 10px 14px;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .sim-results .stat-label {
+            font-size: 11px;
+            color: #8da4a8;
+        }
+
+        .sim-results .stat-value {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .sim-confidence {
+            font-size: 11px;
+            color: #6d888c;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Modais */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-window {
+            background: #0d1517;
+            border: 1px solid #2ec4b6;
+            border-radius: 14px;
+            max-width: 760px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.95);
+            position: relative;
+            padding: 28px;
+            color: #ece8e1;
+        }
+
+        /* Botão Fechar Aprimorado */
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 18px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #8aa4a8;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .modal-close:hover {
+            color: #fff;
+            background: rgba(46, 196, 182, 0.2);
+            border-color: #2ec4b6;
+        }
+
+        .modal-product-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 12px;
+        }
+
+        @media(max-width: 650px) {
+            .modal-product-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .modal-img-container {
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #06090a;
+            border: 1px solid #1a2c2f;
+            height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .luthier-report {
+            background: #090e10;
+            border: 1px solid #192a2d;
+            border-radius: 8px;
+            padding: 14px;
+            margin: 16px 0;
+            font-size: 13px;
+        }
+
+        .report-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid #121e20;
+        }
+
+        .report-item:last-child {
+            border-bottom: none;
+        }
+
+        .report-ok {
+            color: #34d399;
+            font-weight: 700;
+        }
+
+        .checkout-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #9cb5b8;
+        }
+
+        .checkout-total {
+            border-top: 1px solid #1e3336;
+            padding-top: 12px;
+            margin-top: 12px;
+            font-size: 18px;
+            font-weight: 800;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-checkout {
+            width: 100%;
+            background: linear-gradient(180deg, #2ec4b6 0%, #1f9388 100%);
+            color: #ffffff;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            margin-top: 18px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(46, 196, 182, 0.35);
+        }
+
+        .btn-checkout:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(46, 196, 182, 0.55);
+        }
+
+        .escrow-pill-note {
+            background: rgba(46, 196, 182, 0.1);
+            border: 1px solid rgba(46, 196, 182, 0.35);
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 12px;
+            color: #a7f3ec;
+            margin-top: 14px;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #06090a;
+            border-top: 1px solid #142022;
+            padding: 50px 24px 24px 24px;
+            font-size: 13px;
+            color: #6a8286;
+        }
+
+        .footer-grid {
+            max-width: 1240px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand h4 {
+            font-family: 'Great Vibes', cursive !important;
+            color: #2ec4b6;
+            font-size: 38px;
+            line-height: 1;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 2px 8px rgba(46, 196, 182, 0.35));
+        }
+
+        .footer-col h5 {
+            color: #f1f5f9;
+            font-size: 14px;
+            margin-bottom: 14px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 8px;
+        }
+
+        .footer-col a {
+            color: #8da4a8;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-col a:hover {
+            color: #2ec4b6;
+        }
+
+        .footer-bottom {
+            max-width: 1240px;
+            margin: 0 auto;
+            border-top: 1px solid #101a1c;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #556c6f;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo-wrapper">
+                <span class="logo-script-teal">Acordee</span>
+            </a>
+
+            <!-- Barra de busca com Lupa -->
+            <div class="search-bar">
+                <span class="search-icon">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </span>
+                <input type="text" placeholder="Buscar por modelo, luthier, instrumento novo ou usado...">
+            </div>
+
+            <div class="header-actions">
+                <a href="javascript:void(0)" onclick="openProductModal('Guitarra Stratocaster Strinberg Sunburst', 'R$ 499,90', 'img/guitarra-strinberg.png', '4.9', 'Nota Técnica do Luthier', true)" class="btn-announce">
+                    <span>+</span> Anunciar
+                </a>
+                
+                <div class="auth-links">
+                    <a href="#">Entrar</a>
+                    <span class="auth-divider">|</span>
+                    <a href="#" class="btn-signup">Cadastre-se</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sub Navigation com Divisórias entre os Segmentos -->
+    <nav class="subnav">
+        <ul class="subnav-links">
+            <li><a href="#" class="active">Todos</a></li>
+            <li><a href="#">Guitarras & Baixos</a></li>
+            <li><a href="#">Violões</a></li>
+            <li><a href="#">Amplificadores</a></li>
+            <li><a href="#">Pedais & Efeitos</a></li>
+            <li><a href="#">Baterias</a></li>
+            <li><a href="#">Teclas</a></li>
+            <li><a href="#">Luthieria & Peças</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge-pill">
+                O Marketplace Musical Especializado & Sem enrolação
+            </div>
+            <h1>A sua música no tom e no tempo certo, com a segurança que você merece.</h1>
+            <p>A plataforma definitiva para compra e venda de instrumentos novos e usados com intermediação de pagamento em custódia, aval técnico profissional de luthieria e frete expresso em 24h a 48h.</p>
+            <div class="hero-ctas">
+                <a href="#catalogo" class="btn-primary">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                    </svg>
+                    Ver Instrumentos Disponíveis
+                </a>
+
+                <a href="javascript:void(0)" onclick="openProductModal('Guitarra Stratocaster Strinberg Sunburst', 'R$ 499,90', 'img/guitarra-strinberg.png', '4.9', 'Nota Técnica do Luthier', true)" class="btn-secondary">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="#2ec4b6" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="16"></line>
+                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                    </svg>
+                    Anunciar Instrumento
+                </a>
+            </div>
+        </div>
+
+        <!-- Quadros de Confiança -->
+        <div class="trust-grid">
+            <div class="trust-card">
+                <div class="trust-icon">🛡️</div>
+                <div class="trust-text">
+                    <h4>Pagamento em Custódia</h4>
+                    <p>O dinheiro fica retido até você receber e aprovar o item, por meio do sistema escrow.</p>
+                </div>
+            </div>
+            <div class="trust-card">
+                <div class="trust-icon">🔧</div>
+                <div class="trust-text">
+                    <h4>Aval Técnico de Luthier</h4>
+                    <p>Instrumentos usados revisados por meio de formulário padronizado com nota técnica de integridade emitida por especialistas parceiros.</p>
+                </div>
+            </div>
+            <div class="trust-card">
+                <div class="trust-icon">⚡</div>
+                <div class="trust-text">
+                    <h4>Logística Segura 24h/48h</h4>
+                    <p>Embalagem antichoque com seguro integral de transporte.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transição Visual para a Vitrine de Produtos -->
+    <div class="section-divider-transition">
+        <div class="divider-line"></div>
+    </div>
+
+    <!-- Vitrine de Produtos -->
+    <section class="container" id="catalogo">
+        <div class="section-header">
+            <div class="section-title">
+                <h2>Instrumentos e acessórios em destaque</h2>
+                <p>Equipamentos novos com avaliações de compradores e usados certificados com nota técnica por luthiers.</p>
+            </div>
+        </div>
+
+        <div class="product-grid">
+            <!-- 1. Guitarra Strinberg (Usado -> Avaliação de Luthier) -->
+            <div class="product-card" onclick="openProductModal('Guitarra Stratocaster Strinberg Sunburst', 'R$ 499,90', 'img/guitarra-strinberg.png', '4.9', 'Nota Técnica do Luthier', true)">
+                <div class="product-img-box">
+                    <span class="tag-status">Usado - Revisado</span>
+                    <img src="img/guitarra-strinberg.png" alt="Guitarra Strinberg" onerror="this.onerror=null; this.src='img/guitarra-strinberg';">
+                </div>
+                <div class="product-body">
+                    <h3 class="product-name">Guitarra Stratocaster Strinberg Sunburst</h3>
+                    <div class="rating-box">
+                        <span class="stars-gold">★★★★★</span>
+                        <span class="rating-score">4.9</span>
+                        <span class="rating-label-luthier">🔧 Laudo de Luthier</span>
+                    </div>
+                    <p class="product-specs">Configuração SSS • Trastes retificados • Circuito revisado</p>
+                    <div class="price-box">
+                        <div class="price-val">R$ 499,90</div>
+                        <span class="condition-tag">Comprar Seguro</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Takamine Jumbo (Usado -> Avaliação de Luthier) -->
+            <div class="product-card" onclick="openProductModal('Violão Takamine EG523SC Jumbo', 'R$ 3.700,00', 'img/takamine-jumbo.png', '5.0', 'Nota Técnica do Luthier', true)">
+                <div class="product-img-box">
+                    <span class="tag-status">Usado - Excelente</span>
+                    <img src="img/takamine-jumbo.png" alt="Takamine Jumbo" onerror="this.onerror=null; this.src='img/takamine-jumbo';">
+                </div>
+                <div class="product-body">
+                    <h3 class="product-name">Violão Takamine EG523SC Jumbo (Coreano)</h3>
+                    <div class="rating-box">
+                        <span class="stars-gold">★★★★★</span>
+                        <span class="rating-score">5.0</span>
+                        <span class="rating-label-luthier">🔧 Laudo de Luthier</span>
+                    </div>
+                    <p class="product-specs">Aço • Tampo Sólido • Flamed Maple • Pré TK-40</p>
+                    <div class="price-box">
+                        <div class="price-val">R$ 3.700,00</div>
+                        <span class="condition-tag">Comprar Seguro</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Baixo SX (Novo de Loja -> Fundo Tratado em Degradê Escuro) -->
+            <div class="product-card" onclick="openProductModal('Contrabaixo Passivo SX SBM1 Jazz Bass', 'R$ 1.950,00', 'img/baixo-sx-pink.png', '4.8', '14 compradores verificados', false)">
+                <div class="product-img-box bg-catalog">
+                    <span class="tag-status new">Novo de Loja</span>
+                    <img src="img/baixo-sx-pink.png" alt="Baixo SX" onerror="this.onerror=null; this.src='img/baixo-sx-pink';">
+                </div>
+                <div class="product-body">
+                    <h3 class="product-name">Contrabaixo Passivo SX SBM1 Jazz Bass (4C)</h3>
+                    <div class="rating-box">
+                        <span class="stars-gold">★★★★★</span>
+                        <span class="rating-score">4.8</span>
+                        <span class="rating-label-buyers">(14 compradores)</span>
+                    </div>
+                    <p class="product-specs">Cor Pink Twilight • Escala em Maple • Vintage JB</p>
+                    <div class="price-box">
+                        <div class="price-val">R$ 1.950,00</div>
+                        <span class="condition-tag">Comprar Seguro</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Borne Vorax (Novo de Loja -> Fundo Tratado em Degradê Escuro) -->
+            <div class="product-card" onclick="openProductModal('Amplificador Borne Vorax 840 Studio', 'R$ 750,00', 'img/ampli-borne-vorax.png', '4.7', '21 compradores verificados', false)">
+                <div class="product-img-box bg-catalog">
+                    <span class="tag-status new">Novo - Lacrado</span>
+                    <img src="img/ampli-borne-vorax.png" alt="Borne Vorax" onerror="this.onerror=null; this.src='img/ampli-borne-vorax';">
+                </div>
+                <div class="product-body">
+                    <h3 class="product-name">Amplificador Borne Vorax 840 Studio C/ Interface</h3>
+                    <div class="rating-box">
+                        <span class="stars-gold">★★★★★</span>
+                        <span class="rating-score">4.7</span>
+                        <span class="rating-label-buyers">(21 compradores)</span>
+                    </div>
+                    <p class="product-specs">40W RMS • Conexão App/Efeitos • Painel Ouro</p>
+                    <div class="price-box">
+                        <div>
+                            <div class="price-old">R$ 1.200,00</div>
+                            <div class="price-val">R$ 750,00</div>
+                        </div>
+                        <span class="condition-tag">Comprar Seguro</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Balizador de Preço Interativo com Amostragem Analítica -->
+    <section class="container" style="padding-top: 0;">
+        <div class="benchmark-box">
+            <div class="benchmark-info">
+                <h3>Preço justo baseado no histórico real do mercado.</h3>
+                <p>Acabe com os valores arbitrários de classificados informais. Consulte nosso índice de valores médios praticados no Brasil antes de comprar ou anunciar.</p>
+            </div>
+            <div class="benchmark-simulator">
+                <label>Simulador de Preço Médio (Digite para testar):</label>
+                <input type="text" id="simuladorInput" class="sim-input" value="Strinberg Stratocaster" oninput="atualizarSimulador()">
+                <div class="sim-results">
+                    <div class="stat-label" id="simLabel">Faixa Média em Seminovos Verificados:</div>
+                    <div class="stat-value" id="simValue">R$ 480,00 – R$ 560,00 <span style="font-size: 11px; color:#34d399; font-weight:normal;">(Preço Justo Acordee)</span></div>
+                    <div class="sim-confidence" id="simSample">
+                        <span>📊</span> Amostragem: <strong>48 transações validadas</strong> no RS e mercado nacional
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal: Detalhes & Avaliação Técnica/Comprador -->
+    <div id="productModal" class="modal-overlay">
+        <div class="modal-window">
+            <button class="modal-close" onclick="closeModal('productModal')" aria-label="Fechar">✕</button>
+            <span id="modalTopTag" class="tag-status" style="position: static; display: inline-block; margin-bottom: 10px;">Item Verificado por Luthier Parceiro</span>
+            <h2 id="modalTitle" style="font-size: 22px; color: #fff;">Guitarra Stratocaster Strinberg Sunburst</h2>
+            
+            <div class="modal-product-layout">
+                <div>
+                    <div class="modal-img-container">
+                        <img id="modalImg" src="img/guitarra-strinberg.png" alt="Instrumento">
+                    </div>
+                    <div class="escrow-pill-note">
+                        🛡️ <strong>Garantia Acordee:</strong> Seu pagamento só é repassado ao vendedor 48h após você testar o instrumento em mãos.
+                    </div>
+                </div>
+
+                <div>
+                    <div class="rating-box" style="margin-bottom: 10px;">
+                        <span class="stars-gold">★★★★★</span>
+                        <span class="rating-score" id="modalRatingScore">4.9</span>
+                        <span id="modalRatingLabel" class="rating-label-luthier">🔧 Laudo de Luthier</span>
+                    </div>
+
+                    <div style="font-size: 26px; font-weight: 800; color: #34d399; margin-bottom: 6px;" id="modalPrice">R$ 499,90</div>
+                    <p style="font-size: 12px; color: #8da4a8;" id="modalSellerInfo">Vendedor Particular: <strong>Carlos Eduardo (Santa Maria - RS)</strong></p>
+
+                    <div class="luthier-report" id="modalLuthierBox">
+                        <div style="font-weight: 700; color: #a7f3ec; margin-bottom: 8px;">📋 Laudo Técnico de Entrada:</div>
+                        <div class="report-item">
+                            <span>Ação das Cordas:</span>
+                            <span class="report-ok">Baixa (1.5mm) - Macia</span>
+                        </div>
+                        <div class="report-item">
+                            <span>Tensor & Braço:</span>
+                            <span class="report-ok">Alinhado / Tensor Ativo</span>
+                        </div>
+                        <div class="report-item">
+                            <span>Circuito & Pots:</span>
+                            <span class="report-ok">Ruído identificado: mínimo (&lt;5% residual)</span>
+                        </div>
+                        <div class="report-item">
+                            <span>Trastes:</span>
+                            <span class="report-ok">Retificados & Polidos</span>
+                        </div>
+                    </div>
+
+                    <div class="luthier-report" id="modalStoreBox" style="display: none;">
+                        <div style="font-weight: 700; color: #2ec4b6; margin-bottom: 8px;">📦 Garantia de Origem & Fabricante:</div>
+                        <div class="report-item">
+                            <span>Origem:</span>
+                            <span class="report-ok">Distribuidor Oficial Autorizado</span>
+                        </div>
+                        <div class="report-item">
+                            <span>Estado:</span>
+                            <span class="report-ok">Novo Lacrado de Fábrica</span>
+                        </div>
+                        <div class="report-item">
+                            <span>Garantia Legal:</span>
+                            <span class="report-ok">12 Meses com Nota Fiscal</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-checkout" onclick="goToCheckout()">Comprar com Garantia Escrow →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Checkout e Custódia -->
+    <div id="checkoutModal" class="modal-overlay">
+        <div class="modal-window" style="max-width: 520px;">
+            <button class="modal-close" onclick="closeModal('checkoutModal')" aria-label="Fechar">✕</button>
+            <h2 style="font-size: 20px; color: #fff; margin-bottom: 16px;">Finalizar Pedido com Custódia</h2>
+
+            <div style="background: #090e10; border: 1px solid #1a2a2d; border-radius: 8px; padding: 16px; margin-bottom: 18px;">
+                <div class="checkout-line">
+                    <span>Instrumento Selecionado:</span>
+                    <strong style="color: #fff;" id="checkoutItemName">Strinberg Sunburst</strong>
+                </div>
+                <div class="checkout-line">
+                    <span>Valor do Instrumento:</span>
+                    <span id="checkoutItemPrice">R$ 499,90</span>
+                </div>
+                <div class="checkout-line">
+                    <span>Taxa de Proteção & Custódia (Escrow):</span>
+                    <span style="color: #2ec4b6; font-weight: 700;">R$ 29,90</span>
+                </div>
+                <div class="checkout-line">
+                    <span>Envio Especializado (Express 24h):</span>
+                    <span style="color: #a7f3ec;">Grátis (Promoção Regional)</span>
+                </div>
+                <div class="checkout-total">
+                    <span>Total a Pagar:</span>
+                    <span style="color: #34d399;" id="checkoutTotalValue">R$ 529,80</span>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 14px;">
+                <label style="font-size: 12px; color: #8da4a8; display: block; margin-bottom: 6px;">Forma de Pagamento Segura:</label>
+                <select style="width: 100%; background: #06090a; border: 1px solid #1a2a2d; color: #fff; padding: 10px; border-radius: 6px; font-size: 14px; outline: none;">
+                    <option>PIX (Confirmação Imediata na Custódia)</option>
+                    <option>Cartão de Crédito (Até 12x)</option>
+                    <option>Saldo da Carteira Acordee</option>
+                </select>
+            </div>
+
+            <button class="btn-checkout" onclick="confirmOrder()">Confirmar Pagamento Seguro</button>
+        </div>
+    </div>
+
+    <!-- Modal: Confirmação de Sucesso -->
+    <div id="successModal" class="modal-overlay">
+        <div class="modal-window" style="max-width: 480px; text-align: center; padding: 36px 24px;">
+            <button class="modal-close" onclick="closeAllModals()" aria-label="Fechar">✕</button>
+            <div style="font-size: 48px; margin-bottom: 14px;">🛡️</div>
+            <h2 style="font-size: 22px; color: #2ec4b6; margin-bottom: 10px;">Pagamento em Custódia Ativado!</h2>
+            <p style="font-size: 14px; color: #c0d1d3; line-height: 1.6; margin-bottom: 20px;">
+                O valor de <strong id="successTotal" style="color: #fff;">R$ 529,80</strong> foi creditado na conta de custódia segura da Acordee. O vendedor já foi notificado para embalar e despachar o instrumento.
+            </p>
+            <div style="background: rgba(46, 196, 182, 0.08); border-left: 3px solid #2ec4b6; padding: 12px; text-align: left; font-size: 12px; color: #a7f3ec; margin-bottom: 24px; border-radius: 0 6px 6px 0;">
+                🔒 <strong>Regra de Liberação:</strong> O valor só será transferido para o vendedor após você receber o instrumento e testar o laudo do luthier por até 48 horas.
+            </div>
+            <button class="btn-checkout" onclick="closeAllModals()">Concluir Demonstração</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h4>Acordee</h4>
+                <p>Plataforma vertical especializada na compra, venda e verificação técnica de instrumentos musicais novos e usados.</p>
+                <p style="margin-top: 10px; font-size: 11px; color: #556c6f;">Santa Maria - RS | Brasil</p>
+            </div>
+            <div class="footer-col">
+                <h5>Categorias</h5>
+                <ul>
+                    <li><a href="#">Guitarras & Baixos</a></li>
+                    <li><a href="#">Violões Acústicos</a></li>
+                    <li><a href="#">Baterias & Percussão</a></li>
+                    <li><a href="#">Teclas & Sintetizadores</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Luthieria & Oficinas</h5>
+                <ul>
+                    <li><a href="#">Rede de Oficinas Credenciadas</a></li>
+                    <li><a href="#">Seja um Luthier Parceiro</a></li>
+                    <li><a href="#">Checklist de Inspeção</a></li>
+                    <li><a href="#">Guias de Envio Frágil</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Segurança & Garantia</h5>
+                <ul>
+                    <li><a href="#">Sistema de Custódia (Escrow)</a></li>
+                    <li><a href="#">Garantia de 48h de Teste</a></li>
+                    <li><a href="#">Política de Devolução</a></li>
+                    <li><a href="#">Termos e Condições</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Acordee Intermediação Digital Ltda. Todos os direitos reservados. CNPJ: 63.19-4/00.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts de Interação -->
+    <script>
+        let currentItem = {
+            name: 'Guitarra Stratocaster Strinberg Sunburst',
+            price: 'R$ 499,90',
+            img: 'img/guitarra-strinberg.png'
+        };
+
+        function openProductModal(name, price, img, score, labelText, isUsed) {
+            currentItem = { name, price, img };
+            document.getElementById('modalTitle').innerText = name;
+            document.getElementById('modalPrice').innerText = price;
+            document.getElementById('modalImg').src = img;
+            document.getElementById('modalRatingScore').innerText = score;
+
+            const labelElem = document.getElementById('modalRatingLabel');
+            const topTagElem = document.getElementById('modalTopTag');
+            const luthierBox = document.getElementById('modalLuthierBox');
+            const storeBox = document.getElementById('modalStoreBox');
+            const sellerInfo = document.getElementById('modalSellerInfo');
+
+            if (isUsed) {
+                labelElem.className = 'rating-label-luthier';
+                labelElem.innerText = `🔧 ${labelText}`;
+                topTagElem.className = 'tag-status';
+                topTagElem.innerText = 'Item Verificado por Luthier Parceiro';
+                luthierBox.style.display = 'block';
+                storeBox.style.display = 'none';
+                sellerInfo.innerHTML = 'Vendedor Particular: <strong>Carlos Eduardo (Santa Maria - RS)</strong>';
+            } else {
+                labelElem.className = 'rating-label-buyers';
+                labelElem.innerText = `(${labelText})`;
+                topTagElem.className = 'tag-status new';
+                topTagElem.innerText = 'Produto Novo • Loja Parceira Oficial';
+                luthierBox.style.display = 'none';
+                storeBox.style.display = 'block';
+                sellerInfo.innerHTML = 'Loja Oficial: <strong>MusicCenter Store (Revenda Autorizada)</strong>';
+            }
+
+            document.getElementById('productModal').classList.add('active');
+        }
+
+        function goToCheckout() {
+            closeModal('productModal');
+            document.getElementById('checkoutItemName').innerText = currentItem.name;
+            document.getElementById('checkoutItemPrice').innerText = currentItem.price;
+
+            if (currentItem.price.includes('3.700')) {
+                document.getElementById('checkoutTotalValue').innerText = 'R$ 3.729,90';
+                document.getElementById('successTotal').innerText = 'R$ 3.729,90';
+            } else if (currentItem.price.includes('1.950')) {
+                document.getElementById('checkoutTotalValue').innerText = 'R$ 1.979,90';
+                document.getElementById('successTotal').innerText = 'R$ 1.979,90';
+            } else if (currentItem.price.includes('750')) {
+                document.getElementById('checkoutTotalValue').innerText = 'R$ 779,90';
+                document.getElementById('successTotal').innerText = 'R$ 779,90';
+            } else {
+                document.getElementById('checkoutTotalValue').innerText = 'R$ 529,80';
+                document.getElementById('successTotal').innerText = 'R$ 529,80';
+            }
+
+            document.getElementById('checkoutModal').classList.add('active');
+        }
+
+        function confirmOrder() {
+            closeModal('checkoutModal');
+            document.getElementById('successModal').classList.add('active');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        function closeAllModals() {
+            document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+        }
+
+        function atualizarSimulador() {
+            const val = document.getElementById('simuladorInput').value.toLowerCase();
+            const res = document.getElementById('simValue');
+            const sample = document.getElementById('simSample');
+
+            if (val.includes('taka') || val.includes('viol')) {
+                res.innerHTML = 'R$ 3.500,00 – R$ 4.100,00 <span style="font-size: 11px; color:#34d399; font-weight:normal;">(Preço Justo Acordee)</span>';
+                sample.innerHTML = '<span>📊</span> Amostragem: <strong>26 transações validadas</strong> de Takamine EG no Brasil';
+            } else if (val.includes('baixo') || val.includes('sx')) {
+                res.innerHTML = 'R$ 1.800,00 – R$ 2.100,00 <span style="font-size: 11px; color:#34d399; font-weight:normal;">(Preço Justo Acordee)</span>';
+                sample.innerHTML = '<span>📊</span> Amostragem: <strong>34 transações validadas</strong> de baixos SX Jazz Bass';
+            } else if (val.includes('borne') || val.includes('amp')) {
+                res.innerHTML = 'R$ 700,00 – R$ 820,00 <span style="font-size: 11px; color:#34d399; font-weight:normal;">(Preço Justo Acordee)</span>';
+                sample.innerHTML = '<span>📊</span> Amostragem: <strong>19 transações validadas</strong> de amplificadores de estúdio';
+            } else {
+                res.innerHTML = 'R$ 480,00 – R$ 560,00 <span style="font-size: 11px; color:#34d399; font-weight:normal;">(Preço Justo Acordee)</span>';
+                sample.innerHTML = '<span>📊</span> Amostragem: <strong>48 transações validadas</strong> no RS e mercado nacional';
+            }
+        }
+    </script>
+</body>
+</html>
